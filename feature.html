@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features — Korean Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --accent: #F5A623;
+            --success: #7ED321;
+            --calm: #F8F9FA;
+            --text: #2C3E50;
+            --light: #7F8C8D;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .nav {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover { color: var(--primary); }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 20px 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '🇰🇷';
+            position: absolute;
+            font-size: 300px;
+            opacity: 0.08;
+            top: -80px;
+            right: -80px;
+            transform: rotate(15deg);
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.35rem;
+            max-width: 680px;
+            margin: 0 auto 2rem;
+            opacity: 0.95;
+        }
+        
+        .cta-btn {
+            background: white;
+            color: var(--primary);
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+        
+        .section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 32px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 50px rgba(74, 144, 226, 0.15);
+        }
+        
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 24px;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.65rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+        
+        .korean-label {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1.1rem;
+            color: #F5A623;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+        
+        /* Phone Preview */
+        .phone-preview {
+            background: #222;
+            border-radius: 40px;
+            padding: 12px;
+            width: 100%;
+            max-width: 320px;
+            margin: 30px auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .phone-screen {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            height: 520px;
+            position: relative;
+        }
+        
+        .mini-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #eee;
+            font-size: 11px;
+        }
+        
+        .highlight {
+            background: linear-gradient(90deg, #7ED321, #4A90E2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin: 12px 0;
+        }
+        
+        .footer {
+            background: #2C3E50;
+            color: white;
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+        
+        .footer a {
+            color: #7ED321;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">
+                🇰🇷 Korean Quest
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#">Features</a>
+                <a href="app-preview.html">App Preview</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Features that actually help you focus</h1>
+        <p>ADHD-friendly design + Korean culture + privacy-first technology.<br>
+        Learn Korean the way your brain works best.</p>
+        <a href="download.html" class="cta-btn">Start Free 3-Minute Quest →</a>
+    </section>
+
+    <!-- ADHD Design Section -->
+    <section class="section" style="background: white;">
+        <h2 class="section-title">ADHD-Friendly Design</h2>
+        <div class="features-grid">
+            <!-- Card 1 -->
+            <div class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <h3>One Single Daily Goal</h3>
+                <p>No overwhelming lists. Just one achievable goal every day — reduces decision fatigue and builds momentum.</p>
+                <div class="highlight">“Today: Learn 5 food words”</div>
+                <span class="korean-label">오늘의 목표</span>
+            </div>
+            
+            <!-- Card 2 -->
+            <div class="feature-card">
+                <span class="feature-icon">⏱️</span>
+                <h3>Focus Timer + Gentle Breaks</h3>
+                <p>Soft 3–5 minute sessions with calming animations. Built-in “Hint / Skip / Break” buttons so you never feel stuck.</p>
+                <div class="phone-preview">
+                    <div class="phone-screen" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <div style="font-size: 42px; font-weight: bold;">02:45</div>
+                        <div style="margin-top: 12px; font-size: 14px;">FOCUS MODE ACTIVE</div>
+                    </div>
+                </div>
+                <span class="korean-label">집중 모드</span>
+            </div>
+            
+            <!-- Card 3 -->
+            <div class="feature-card">
+                <span class="feature-icon">🌈</span>
+                <h3>Micro-Tasks & Dopamine Hits</h3>
+                <p>Quick wins like “Say 안녕하세요” or “Match 3 pictures” give instant satisfaction. Streaks, stars, and BTS stickers keep motivation high.</p>
+                <span class="korean-label">작은 승리</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learning Tools Section -->
+    <section class="section" style="background: var(--calm);">
+        <h2 class="section-title">Powerful Learning Tools</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🖼️</span>
+                <h3>Visual Picture Matching</h3>
+                <p>Learn vocabulary by matching Korean words to real photos (김치, 사과, BTS, etc.). Perfect for visual learners.</p>
+                <div class="phone-preview">
+                    <div class="phone-screen" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 20px;">
+                        <div style="background: #fff; border-radius: 12px; padding: 20px; text-align: center; font-size: 48px;">🍎</div>
+                        <div style="background: #fff; border-radius: 12px; padding: 20px; text-align: center; font-size: 48px;">🍊</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">💬</span>
+                <h3>AI Idol Chat</h3>
+                <p>Practice real conversations with your favorite K-pop idols (Jimin, Lisa, etc.). 100% private — everything runs locally.</p>
+                <div class="highlight">“Talk with Jimin about food!” 💜</div>
+            </div>
+            
+            <div class="feature-card">
+                <span class="feature-icon">🎵</span>
+                <h3>K-pop & Culture Immersion</h3>
+                <p>Learn through lyrics, food ordering, subway navigation, and drama phrases. Real Korean life, not just textbooks.</p>
+                <span class="korean-label">한류로 배우기</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Section -->
+    <section class="section">
+        <h2 class="section-title">Privacy First — Always</h2>
+        <div style="max-width: 800px; margin: 0 auto; background: white; border-radius: 28px; padding: 50px; box-shadow: 0 15px 40px rgba(0,0,0,0.1);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; text-align: center;">
+                <div>
+                    <div style="font-size: 3rem; margin-bottom: 12px;">🔒</div>
+                    <h4 style="font-size: 1.3rem;">100% Local Processing</h4>
+                    <p style="color: var(--light);">Audio, images, and chat never leave your device</p>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; margin-bottom: 12px;">🗑️</div>
+                    <h4 style="font-size: 1.3rem;">Auto-Delete After 7 Days</h4>
+                    <p style="color: var(--light);">Your progress is saved — everything else disappears</p>
+                </div>
+                <div>
+                    <div style="font-size: 3rem; margin-bottom: 12px;">⏰</div>
+                    <h4 style="font-size: 1.3rem;">90-Day Permission Expiry</h4>
+                    <p style="color: var(--light);">No forever permissions. Ever.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px; padding-top: 30px; border-top: 2px dashed #eee;">
+                <span style="background: #7ED321; color: white; padding: 8px 24px; border-radius: 30px; font-weight: 600;">GDPR + Neurodiverse Privacy Design</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress & Gamification -->
+    <section class="section" style="background: white;">
+        <h2 class="section-title">See Your Progress Glow</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">📊</span>
+                <h3>Weekly Focus Map</h3>
+                <p>Beautiful heat-map style calendar. Watch your consistency grow.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🏆</span>
+                <h3>Achievements & Rewards</h3>
+                <p>Unlock BTS stickers, K-pop songs, and “Food Expert” badges.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔄</span>
+                <h3>Quick Review</h3>
+                <p>One-tap review of everything you learned today — no overwhelm.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section style="background: linear-gradient(135deg, #4A90E2, #764ba2); color: white; padding: 100px 20px; text-align: center;">
+        <h2 style="font-size: 2.8rem; margin-bottom: 1rem;">Ready to start your Korean Quest?</h2>
+        <p style="font-size: 1.3rem; max-width: 500px; margin: 0 auto 2rem;">Completely free. No account needed. Works offline.</p>
+        <a href="download.html" class="cta-btn" style="background: white; color: #4A90E2; font-size: 1.3rem; padding: 20px 50px;">Try 3-Minute Demo Now →</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                Korean Quest — ADHD-Friendly Korean Learning<br>
+                <span style="opacity: 0.7;">Made with ❤️ for neurodiverse learners who love Korea</span>
+            </p>
+            <p>
+                <a href="app-preview.html">App Preview</a> • 
+                <a href="index.html">Home</a> • 
+                <a href="https://civic-fuchsia-p2qo8vwkup.edgeone.app/" target="_blank">Live Website</a>
+            </p>
+            <p style="margin-top: 40px; opacity: 0.6; font-size: 0.9rem;">© 2026 Korean Quest • All rights reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple scroll animation for cards
+        const cards = document.querySelectorAll('.feature-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(card);
+        });
+        
+        console.log('%cKorean Quest Features Page Loaded ✨', 'color:#4A90E2; font-size:14px; font-weight:600');
+    </script>
+</body>
+</html>

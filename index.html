@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Korean Quest - ADHD-Friendly Korean Learning</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            /* Colors */
+            --primary-blue: #4A90E2;
+            --accent-yellow: #F5A623;
+            --success-green: #7ED321;
+            --focus-red: #FF6B6B;
+            --calm-bg: #F8F9FA;
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
+            --border-color: #E0E0E0;
+            --white: #FFFFFF;
+            
+            /* Spacing */
+            --space-xs: 8px;
+            --space-sm: 16px;
+            --space-md: 24px;
+            --space-lg: 32px;
+            --space-xl: 48px;
+            --space-xxl: 64px;
+            
+            /* Typography */
+            --font-base: 16px;
+            --line-height: 1.6;
+            --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-korean: 'Noto Sans KR', sans-serif;
+            
+            /* Effects */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-inter);
+            font-size: var(--font-base);
+            line-height: var(--line-height);
+            color: var(--text-dark);
+            background-color: var(--calm-bg);
+            overflow-x: hidden;
+        }
+        
+        /* ADHD-friendly focus styles */
+        *:focus {
+            outline: 3px solid var(--primary-blue);
+            outline-offset: 2px;
+        }
+        
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+        
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: var(--space-md);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+        }
+        
+        h4 {
+            font-size: 1.25rem;
+        }
+        
+        p {
+            margin-bottom: var(--space-md);
+        }
+        
+        .korean-text {
+            font-family: var(--font-korean);
+            font-weight: 500;
+        }
+        
+        /* ===== LAYOUT ===== */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        .section {
+            padding: var(--space-xxl) 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-xxl);
+        }
+        
+        .section-header h2 {
+            color: var(--primary-blue);
+            margin-bottom: var(--space-sm);
+        }
+        
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            padding: var(--space-sm) 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+        
+        .logo-icon {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-lg);
+            list-style: none;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-blue);
+            background-color: rgba(74, 144, 226, 0.1);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+        }
+        
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 120px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-xxl);
+            align-items: center;
+        }
+        
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .hero-text .korean-text {
+            font-size: 2rem;
+            color: var(--primary-blue);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        .hero-image {
+            text-align: center;
+        }
+        
+        .app-mockup {
+            max-width: 100%;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            transform: perspective(1000px) rotateY(-10deg);
+            transition: var(--transition);
+        }
+        
+        .app-mockup:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+        
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: var(--space-md) var(--space-lg);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            font-size: 1rem;
+            min-height: 44px; /* ADHD-friendly touch target */
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a7bc8;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(74, 144, 226, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-yellow);
+            color: var(--white);
+        }
+        
+        /* ===== FEATURES SECTION ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        .feature-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: var(--space-xl);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-lg);
+            color: var(--primary-blue);
+        }
+        
+        .feature-card.adhd .feature-icon {
+            color: var(--accent-yellow);
+        }
+        
+        .feature-card.privacy .feature-icon {
+            color: var(--success-green);
+        }
+        
+        .feature-card.learning .feature-icon {
+            color: var(--focus-red);
+        }
+        
+        /* ===== APP PREVIEW ===== */
+        .app-preview {
+            background-color: var(--white);
+        }
+        
+        .screens-container {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+            margin-top: var(--space-xl);
+        }
+        
+        .screen-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: var(--space-md);
+            box-shadow: var(--shadow-lg);
+            max-width: 300px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .screen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .screen-title {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+        
+        .screen-content {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: var(--space-xl);
+        }
+        
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            background-color: var(--white);
+        }
+        
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* ===== FOOTER ===== */
+        .footer {
+            background-color: var(--text-dark);
+            color: var(--white);
+            padding: var(--space-xxl) 0 var(--space-xl);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .footer-section h4 {
+            color: var(--white);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--white);
+            padding-left: var(--space-xs);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: var(--space-xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+            
+            .hero {
+                padding-top: 100px;
+                min-height: auto;
+                padding-bottom: var(--space-xxl);
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: var(--space-xl);
+            }
+            
+            .hero-text h1 {
+                font-size: 2.25rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: var(--space-lg);
+                box-shadow: var(--shadow-md);
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: var(--transition);
+                z-index: 999;
+            }
+            
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        
+        /* ===== UTILITY CLASSES ===== */
+        .text-center {
+            text-align: center;
+        }
+        
+        .mb-sm { margin-bottom: var(--space-sm); }
+        .mb-md { margin-bottom: var(--space-md); }
+        .mb-lg { margin-bottom: var(--space-lg); }
+        .mb-xl { margin-bottom: var(--space-xl); }
+        
+        .mt-sm { margin-top: var(--space-sm); }
+        .mt-md { margin-top: var(--space-md); }
+        .mt-lg { margin-top: var(--space-lg); }
+        .mt-xl { margin-top: var(--space-xl); }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-flag logo-icon"></i>
+                Korean Quest
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="feature.html" class="nav-link">Features</a></li>
+                <li><a href="app-preview.html" class="nav-link">App Preview</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Learn Korean,<br>Your Way</h1>
+                    <div class="korean-text">안녕하세요! 한국어를 배워보세요</div>
+                    <p class="hero-subtitle">
+                        An ADHD-friendly Korean learning app designed for focus, 
+                        privacy, and real progress. Your journey starts here.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#download" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Download Now
+                        </a>
+                        <a href="#features" class="btn btn-secondary">
+                            <i class="fas fa-play-circle"></i> See How It Works
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="Korean Quest App Interface" class="app-mockup">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Designed for Your Success</h2>
+                <p>Built with ADHD-friendly principles and privacy-first technology</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card adhd">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>ADHD-Friendly Design</h3>
+                    <p>Short 3-5 minute sessions, gamified progress, and focus modes 
+                    that reduce cognitive load and keep you engaged.</p>
+                    <ul class="mt-md">
+                        <li>Gentle notifications</li>
+                        <li>Visual progress tracking</li>
+                        <li>Micro-learning tasks</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card privacy">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Privacy First</h3>
+                    <p>Your data stays on your device. Local processing, automatic 
+                    deletion, and granular permissions put you in control.</p>
+                    <ul class="mt-md">
+                        <li>No data collection</li>
+                        <li>90-day permission expiry</li>
+                        <li>GDPR compliant</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card learning">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Immersive Learning</h3>
+                    <p>Learn through context with visual scanning, pronunciation 
+                    feedback, and location-based vocabulary discovery.</p>
+                    <ul class="mt-md">
+                        <li>Object scanner</li>
+                        <li>Voice practice</li>
+                        <li>Cultural context</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Preview Section -->
+    <section class="section app-preview" id="preview">
+        <div class="container">
+            <div class="section-header">
+                <h2>See Korean Quest in Action</h2>
+                <p>Clean, focused interfaces designed for optimal learning</p>
+            </div>
+            
+            <div class="screens-container">
+                <div class="screen-card">
+                    <div class="screen-header">
+                        <div class="screen-title">Home Dashboard</div>
+                        <div class="screen-badge">🏠</div>
+                    </div>
+                    <div class="screen-content">
+                        Personalized daily quests, streak tracking, and quick 
+                        activity selection. Everything you need at a glance.
+                    </div>
+                </div>
+                
+                <div class="screen-card">
+                    <div class="screen-header">
+                        <div class="screen-title">Learning Session</div>
+                        <div class="screen-badge">📚</div>
+                    </div>
+                    <div class="screen-content">
+                        Focus timer, interactive vocabulary, and immediate 
+                        feedback. Learn in short, productive bursts.
+                    </div>
+                </div>
+                
+                <div class="screen-card">
+                    <div class="screen-header">
+                        <div class="screen-title">Progress Dashboard</div>
+                        <div class="screen-badge">📊</div>
+                    </div>
+                    <div class="screen-content">
+                        Visual progress tracking, achievements, and learning 
+                        statistics. See how far you've come.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Learners Say</h2>
+                <p>Join thousands who are learning Korean their way</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p>"As someone with ADHD, I've tried countless language apps. 
+                    Korean Quest is the first one that actually works with my 
+                    brain, not against it."</p>
+                    <div class="mt-md">
+                        <strong>Alex C.</strong><br>
+                        <small>3-month user</small>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p>"The privacy features gave me peace of mind, and the 
+                    short lessons fit perfectly into my busy schedule. 
+                    I've learned more in a month than I did in a year with 
+                    other methods."</p>
+                    <div class="mt-md">
+                        <strong>Jamie L.</strong><br>
+                        <small>Teacher</small>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p>"Finally an app that understands visual learners! 
+                    The object scanner and visual cues make vocabulary 
+                    stick in a way textbooks never could."</p>
+                    <div class="mt-md">
+                        <strong>Taylor R.</strong><br>
+                        <small>Graphic Designer</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section" id="download">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Start Your Korean Quest Today</h2>
+                <p class="mb-xl">Download now and get your first week free. 
+                No credit card required, no hidden fees.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary btn-accent">
+                        <i class="fab fa-apple"></i> App Store
+                    </a>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fab fa-google-play"></i> Google Play
+                    </a>
+                    <a href="#" class="btn btn-secondary">
+                        <i class="fas fa-desktop"></i> Web Version
+                    </a>
+                </div>
+                
+                <p class="mt-xl text-center" style="color: var(--text-light); font-size: 0.9rem;">
+                    <i class="fas fa-shield-alt"></i> 100% privacy guaranteed · 
+                    <i class="fas fa-clock"></i> 3-5 minute lessons · 
+                    <i class="fas fa-star"></i> Free to start
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>Korean Quest</h4>
+                    <p>ADHD-friendly Korean learning designed for focus, 
+                    privacy, and real progress.</p>
+                    <div class="mt-md">
+                        <a href="#" class="btn btn-secondary" style="padding: var(--space-sm) var(--space-md);">
+                            <i class="fas fa-envelope"></i> Newsletter
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#preview">App Preview</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#download">Download</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Learning Tips</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Korean Quest. All rights reserved. 
+                <span class="korean-text">안녕히 계세요!</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Update active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Console greeting
+        console.log('🎯 Korean Quest Website Loaded!');
+        console.log('Features: ADHD-friendly design, privacy-first, immersive learning');
+    </script>
+</body>
+</html>
