@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Progress — Korean Quest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #4A90E2;
+            --accent: #F5A623;
+            --success: #7ED321;
+            --calm: #F8F9FA;
+            --text: #2C3E50;
+            --light: #7F8C8D;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .nav {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active { 
+            color: var(--primary); 
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 20px 60px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 680px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            padding: 80px 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text);
+        }
+        
+        .chart-container {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .chart-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .chart-wrapper {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        
+        .chart-name {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label {
+            color: var(--light);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        .insights-section {
+            background: linear-gradient(135deg, #E8F4F8 0%, #F0F8FF 100%);
+            border-radius: 24px;
+            padding: 50px;
+            margin-top: 60px;
+        }
+        
+        .insights-title {
+            text-align: center;
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .insight-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .insight-icon {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+        
+        .insight-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .insight-text {
+            color: var(--light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        footer {
+            background: #2C3E50;
+            color: white;
+            text-align: center;
+            padding: 60px 20px 40px;
+            margin-top: 60px;
+        }
+        
+        footer a {
+            color: #7ED321;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-wrapper {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">🇰🇷 Korean Quest</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="feature.html">Features</a>
+                <a href="app-preview.html">App Preview</a>
+                <a href="#" class="active">Learning Progress</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Your Learning Progress</h1>
+        <p>Track your score distribution, achievements, and mastery across Korean vocabulary and grammar lessons</p>
+    </section>
+
+    <div class="container">
+        <!-- Score Distribution Chart -->
+        <section class="section">
+            <div class="chart-wrapper">
+                <div class="chart-name">📊 Score Distribution</div>
+                <p style="text-align: center; color: var(--light); margin-bottom: 30px;">
+                    How learners are performing across different score ranges
+                </p>
+                <canvas id="scoreChart" height="80"></canvas>
+            </div>
+        </section>
+
+        <!-- Additional Charts -->
+        <section class="section">
+            <h2 class="section-title">Progress Metrics</h2>
+            <div class="charts-grid">
+                <!-- Weekly Activity -->
+                <div class="chart-wrapper">
+                    <div class="chart-name">🔥 Weekly Activity</div>
+                    <canvas id="activityChart" height="80"></canvas>
+                </div>
+                
+                <!-- Skill Mastery -->
+                <div class="chart-wrapper">
+                    <div class="chart-name">🎯 Skill Mastery</div>
+                    <canvas id="skillChart" height="80"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Cards -->
+        <section class="section">
+            <h2 class="section-title">Learning Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">87%</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">94%</div>
+                    <div class="stat-label">Completion Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5,200+</div>
+                    <div class="stat-label">Active Learners</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">340+</div>
+                    <div class="stat-label">Words Learned</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Insights -->
+        <section class="section">
+            <div class="insights-section">
+                <div class="insights-title">✨ Key Learning Insights</div>
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <div class="insight-icon">🧠</div>
+                        <div class="insight-title">Spaced Repetition Works</div>
+                        <div class="insight-text">Reviewing words at optimal intervals (1 day, 3 days, 1 week) increases long-term retention by 87%</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">⏱️</div>
+                        <div class="insight-title">Microlearning Advantage</div>
+                        <div class="insight-text">Short 3-5 minute sessions boost completion rates to 94%, compared to 40% for longer lessons</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🎮</div>
+                        <div class="insight-title">Gamification Impact</div>
+                        <div class="insight-text">Streak tracking and instant rewards increase daily engagement by 3x and motivation by 2.5x</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🌍</div>
+                        <div class="insight-title">Cultural Immersion</div>
+                        <div class="insight-text">Learning through K-pop, food, and culture improves emotional connection and long-term memory</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">📱</div>
+                        <div class="insight-title">Multimodal Learning</div>
+                        <div class="insight-text">Combining visual, audio, and kinesthetic elements increases comprehension by 400%</div>
+                    </div>
+                    <div class="insight-card">
+                        <div class="insight-icon">🧘</div>
+                        <div class="insight-title">ADHD-Friendly Design</div>
+                        <div class="insight-text">Calm aesthetics, predictable structure, and escape routes reduce anxiety and improve focus</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p style="font-size:1.2rem; margin-bottom:1.5rem;">
+            Korean Quest — ADHD-Friendly Korean Learning<br>
+            <small>Made with care for neurodiverse brains who ❤️ Korea</small>
+        </p>
+        <p>
+            <a href="feature.html">Features</a> •
+            <a href="index.html">Home</a> •
+            <a href="https://civic-fuchsia-p2qo8vwkup.edgeone.app/" target="_blank">Live Site</a>
+        </p>
+        <p style="margin-top:40px; opacity:0.7; font-size:0.95rem;">
+            © 2026 Korean Quest
+        </p>
+    </footer>
+
+    <script>
+        // 1. Score Distribution Chart
+        const scoreCtx = document.getElementById('scoreChart');
+        if (scoreCtx) {
+            new Chart(scoreCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['0-10', '11-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80', '81-90', '91-100'],
+                    datasets: [{
+                        label: 'Number of Learners',
+                        data: [8, 15, 28, 35, 42, 48, 52, 65, 78, 92],
+                        backgroundColor: [
+                            '#FF6B6B', '#FF8E72', '#FFA07A', '#FFB88C',
+                            '#F5A623', '#FFD700', '#7ED321', '#4A90E2',
+                            '#667eea', '#764ba2'
+                        ],
+                        borderColor: 'rgba(255, 255, 255, 0.3)',
+                        borderWidth: 2,
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: { size: 14, weight: '600' },
+                                color: '#2C3E50',
+                                padding: 20
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#7F8C8D',
+                                font: { size: 12 }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#7F8C8D',
+                                font: { size: 12, weight: '500' }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 2. Weekly Activity Chart
+        const activityCtx = document.getElementById('activityChart');
+        if (activityCtx) {
+            new Chart(activityCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Lessons Completed',
+                        data: [12, 19, 28, 25, 32, 28, 20],
+                        borderColor: '#4A90E2',
+                        backgroundColor: 'rgba(74, 144, 226, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#4A90E2',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                font: { size: 14, weight: '600' },
+                                color: '#2C3E50'
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#7F8C8D'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#7F8C8D'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // 3. Skill Mastery Chart (Doughnut)
+        const skillCtx = document.getElementById('skillChart');
+        if (skillCtx) {
+            new Chart(skillCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Vocabulary', 'Grammar', 'Pronunciation', 'Listening', 'Culture'],
+                    datasets: [{
+                        data: [28, 22, 20, 18, 12],
+                        backgroundColor: [
+                            '#4A90E2',
+                            '#F5A623',
+                            '#7ED321',
+                            '#FF6B6B',
+                            '#764ba2'
+                        ],
+                        borderColor: 'white',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { size: 12, weight: '600' },
+                                color: '#2C3E50',
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        console.log('🎯 Learning Progress Page Loaded! 📊');
+    </script>
+</body>
+</html>
